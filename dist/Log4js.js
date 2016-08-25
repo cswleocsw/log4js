@@ -98,6 +98,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 *
 	 * @param {string} str - string
+	 * @returns {boolean} - bool
+	 */
+	function isString(str) {
+	  return typeof str === 'string';
+	}
+
+	/**
+	 *
+	 * @param {string} str - string
 	 * @param {number} len - length
 	 * @returns {string} - string
 	 */
@@ -133,29 +142,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  Logger.prototype.debug = function debug(str) {
-	    this.write(LEVEL_MAP.DEBUG, str);
+	    if (isString(str)) {
+	      for (var _len = arguments.length, others = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        others[_key - 1] = arguments[_key];
+	      }
+
+	      this.write(LEVEL_MAP.DEBUG, str, others);
+	    }
 	  };
 
 	  Logger.prototype.info = function info(str) {
-	    this.write(LEVEL_MAP.INFO, str);
+	    if (isString(str)) {
+	      for (var _len2 = arguments.length, others = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	        others[_key2 - 1] = arguments[_key2];
+	      }
+
+	      this.write(LEVEL_MAP.INFO, str, others);
+	    }
 	  };
 
 	  Logger.prototype.warn = function warn(str) {
-	    this.write(LEVEL_MAP.WARN, str);
+	    if (isString(str)) {
+	      for (var _len3 = arguments.length, others = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+	        others[_key3 - 1] = arguments[_key3];
+	      }
+
+	      this.write(LEVEL_MAP.WARN, str, others);
+	    }
 	  };
 
 	  Logger.prototype.error = function error(str) {
-	    this.write(LEVEL_MAP.ERROR, str);
+	    if (isString(str)) {
+	      for (var _len4 = arguments.length, others = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+	        others[_key4 - 1] = arguments[_key4];
+	      }
+
+	      this.write(LEVEL_MAP.ERROR, str, others);
+	    }
 	  };
 
 	  Logger.prototype.fatal = function fatal(str) {
-	    this.write(LEVEL_MAP.FATAL, str);
+	    if (isString(str)) {
+	      for (var _len5 = arguments.length, others = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+	        others[_key5 - 1] = arguments[_key5];
+	      }
+
+	      this.write(LEVEL_MAP.FATAL, str, others);
+	    }
 	  };
 
-	  Logger.prototype.write = function write(level, str) {
-	    if (level >= this.level) {
+	  Logger.prototype.write = function write(level, str, others) {
+	    if (level >= this.level && isString(str)) {
 	      var log = console[LEVEL_KEY[level].toLowerCase()] ? console[LEVEL_KEY[level].toLowerCase()] : console.log;
-	      log('[' + getDateTime() + '] [' + LEVEL_KEY[level] + '] ' + this.name + ' - ' + str);
+	      log.apply(undefined, ['[' + getDateTime() + '] [' + LEVEL_KEY[level] + '] ' + this.name + ' - ' + str].concat(others));
 	    }
 	  };
 

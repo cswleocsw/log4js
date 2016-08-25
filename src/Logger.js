@@ -4,6 +4,15 @@ export const LEVEL_KEY = { 1: 'DEBUG', 2: 'INFO', 3: 'WARN', 4: 'ERROR', 5: 'FAT
 /**
  *
  * @param {string} str - string
+ * @returns {boolean} - bool
+ */
+function isString(str) {
+  return typeof str === 'string'
+}
+
+/**
+ *
+ * @param {string} str - string
  * @param {number} len - length
  * @returns {string} - string
  */
@@ -33,30 +42,40 @@ export default class Logger {
     }
   }
 
-  debug(str) {
-    this.write(LEVEL_MAP.DEBUG, str)
+  debug(str, ...others) {
+    if (isString(str)) {
+      this.write(LEVEL_MAP.DEBUG, str, others)
+    }
   }
 
-  info(str) {
-    this.write(LEVEL_MAP.INFO, str)
+  info(str, ...others) {
+    if (isString(str)) {
+      this.write(LEVEL_MAP.INFO, str, others)
+    }
   }
 
-  warn(str) {
-    this.write(LEVEL_MAP.WARN, str)
+  warn(str, ...others) {
+    if (isString(str)) {
+      this.write(LEVEL_MAP.WARN, str, others)
+    }
   }
 
-  error(str) {
-    this.write(LEVEL_MAP.ERROR, str)
+  error(str, ...others) {
+    if (isString(str)) {
+      this.write(LEVEL_MAP.ERROR, str, others)
+    }
   }
 
-  fatal(str) {
-    this.write(LEVEL_MAP.FATAL, str)
+  fatal(str, ...others) {
+    if (isString(str)) {
+      this.write(LEVEL_MAP.FATAL, str, others)
+    }
   }
 
-  write(level, str) {
-    if (level >= this.level) {
+  write(level, str, others) {
+    if (level >= this.level && isString(str)) {
       const log = console[LEVEL_KEY[level].toLowerCase()] ? console[LEVEL_KEY[level].toLowerCase()] : console.log
-      log(`[${getDateTime()}] [${LEVEL_KEY[level]}] ${this.name} - ${str}`)
+      log(`[${getDateTime()}] [${LEVEL_KEY[level]}] ${this.name} - ${str}`, ...others)
     }
   }
 }
