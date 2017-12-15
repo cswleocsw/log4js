@@ -103,8 +103,6 @@ Logger.prototype.write = function () {
       ' - ' + others[0] + '   '
     ]
 
-    let a
-
     if (others.length > 1) {
       output = output.concat(args)
     } 
