@@ -30,8 +30,8 @@ function isString(str) {
  * @returns {string} - string
  */
 function padLeft(str, len) {
-  const s = `${str}`
-  return s.length >= len ? s : padLeft(`0${s}`, len)
+  const s = '' + str
+  return s.length >= len ? s : padLeft('0' + s, len)
 }
 
 /**
@@ -40,7 +40,18 @@ function padLeft(str, len) {
  */
 function getDateTime() {
   let d = new Date()
-  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${padLeft(d.getHours(), 2)}:${padLeft(d.getMinutes(), 2)}:${padLeft(d.getSeconds(), 2)}:${d.getMilliseconds()}`
+  return d.getFullYear() + 
+    '-' + 
+    (d.getMonth() + 1) + 
+    '-' + 
+    d.getDate() + ' ' +  
+    padLeft(d.getHours(), 2) + 
+    ':' + 
+    padLeft(d.getMinutes(), 2) + 
+    ':' + 
+    padLeft(d.getSeconds(), 2) + 
+    ':' + 
+    d.getMilliseconds()
 }
 
 function Logger(name, options) {
@@ -80,7 +91,25 @@ Logger.prototype.write = function () {
   const others = arguments[1]
   
   if (level >= this.level) {
-    console.log.apply(console.log, [`[${getDateTime()}] [${LEVEL_KEY[level]}] ${this.name} - ${others[0]} >>`].concat(others.slice(1)))
+    const args = others.slice(1)
+
+    let output = [
+      '[' + 
+      getDateTime() + 
+      '] ' + 
+      LEVEL_KEY[level] + 
+      ' ' + 
+      this.name + 
+      ' - ' + others[0] + '   '
+    ]
+
+    let a
+
+    if (others.length > 1) {
+      output = output.concat(args)
+    } 
+
+    console.log.apply(console.log, output)
   }
 }
 
