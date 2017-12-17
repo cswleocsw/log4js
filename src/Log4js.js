@@ -44,23 +44,23 @@ Logger.prototype.setLevel = function (level) {
 }
 
 Logger.prototype.debug = function () {
-  this.write(LType.DEBUG, Array.from(arguments))
+  this.write(LType.DEBUG, [].slice.call(arguments))
 }
 
 Logger.prototype.info = function () {
-  this.write(LType.INFO, Array.from(arguments))
+  this.write(LType.INFO, [].slice.call(arguments))
 }
 
 Logger.prototype.warn = function () {
-  this.write(LType.WARN, Array.from(arguments))
+  this.write(LType.WARN, [].slice.call(arguments))
 }
 
 Logger.prototype.error = function () {
-  this.write(LType.ERROR, Array.from(arguments))
+  this.write(LType.ERROR, [].slice.call(arguments))
 }
 
 Logger.prototype.fatal = function () {
-  this.write(LType.FATAL, Array.from(arguments))
+  this.write(LType.FATAL, [].slice.call(arguments))
 }
 
 Logger.prototype.write = function () {
