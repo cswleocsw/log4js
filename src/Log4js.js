@@ -1,43 +1,20 @@
-const LEVEL_MAP = {
-  DEBUG: 1,
-  INFO: 2,
-  WARN: 3,
-  ERROR: 4,
-  FATAL: 5
+const LType = {
+  DEBUG: 'DEBUG',
+  INFO: 'INFO',
+  WARN: 'WARN',
+  ERROR: 'ERROR',
+  FATAL: 'FATAL'
 }
 
-const LEVEL_KEY = {
-  1: 'DEBUG',
-  2: 'INFO',
-  3: 'WARN',
-  4: 'ERROR',
-  5: 'FATAL'
-}
-
-/**
- *
- * @param {string} str - string
- * @returns {boolean} - bool
- */
 function isString(str) {
   return typeof str === 'string'
 }
 
-/**
- *
- * @param {string} str - string
- * @param {number} len - length
- * @returns {string} - string
- */
 function padLeft(str, len) {
   const s = '' + str
   return s.length >= len ? s : padLeft('0' + s, len)
 }
 
-/**
- *
- * @returns {string} - date time string
- */
 function getDateTime() {
   let d = new Date()
   return d.getFullYear() + 
@@ -57,54 +34,56 @@ function getDateTime() {
 function Logger(name, options) {
   this.name = name || 'Log4js'
   this.options = options || {}
-  this.level = LEVEL_MAP[this.options.level] || LEVEL_MAP.INFO
+  this.level = LType[this.options.level] || LType.INFO
 }
 
 Logger.prototype.setLevel = function (level) {
-  if (LEVEL_MAP[level]) {
-    this.level = LEVEL_MAP[level]
+  if (LType[level]) {
+    this.level = LType[level]
   }
 }
 
 Logger.prototype.debug = function () {
-  this.write(LEVEL_MAP.DEBUG, Array.from(arguments))
+  this.write(LType.DEBUG, Array.from(arguments))
 }
 
 Logger.prototype.info = function () {
-  this.write(LEVEL_MAP.INFO, Array.from(arguments))
+  this.write(LType.INFO, Array.from(arguments))
 }
 
 Logger.prototype.warn = function () {
-  this.write(LEVEL_MAP.WARN, Array.from(arguments))
+  this.write(LType.WARN, Array.from(arguments))
 }
 
 Logger.prototype.error = function () {
-  this.write(LEVEL_MAP.ERROR, Array.from(arguments))
+  this.write(LType.ERROR, Array.from(arguments))
 }
 
 Logger.prototype.fatal = function () {
-  this.write(LEVEL_MAP.FATAL, Array.from(arguments))
+  this.write(LType.FATAL, Array.from(arguments))
 }
 
 Logger.prototype.write = function () {
   const level = arguments[0]
-  const others = arguments[1]
+  const args = arguments[1]
   
   if (level >= this.level) {
-    const args = others.slice(1)
+    const others = args.slice(1)
 
     let output = [
       '[' + 
       getDateTime() + 
       '] ' + 
-      LEVEL_KEY[level] + 
+      LType[level] + 
       ' ' + 
       this.name + 
-      ' - ' + others[0] + '   '
+      ' - ' + 
+      args[0] + 
+      '   '
     ]
 
-    if (others.length > 1) {
-      output = output.concat(args)
+    if (args.length > 1) {
+      output = output.concat(others)
     } 
 
     console.log.apply(console.log, output)
