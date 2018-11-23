@@ -1,7 +1,24 @@
-const WebpackConfig = require('webpack-config')
+const path = require('path')
+const webpack = require('webpack')
 
-WebpackConfig.environment.setAll({
-  env: () => process.env.NODE_ENV || 'development'
-})
-
-module.exports = new WebpackConfig.Config().extend('webpack/[env].config.js')
+module.exports = {
+  mode: 'development',
+  entry: './src/Logger.js',
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'Log4js.js',
+    library: 'Log4js',
+    libraryTarget: 'umd'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
+  }
+}
