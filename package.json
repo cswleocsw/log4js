@@ -2,7 +2,7 @@
   "name": "log4js-free",
   "version": "1.0.0",
   "description": "",
-  "main": "build/Log4js.js",
+  "main": "dist/Log4js.js",
   "author": "cswleocsw <cswleo@gmail.com>",
   "license": "ISC",
   "scripts": {
