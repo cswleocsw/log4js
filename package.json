@@ -1,6 +1,6 @@
 {
   "name": "log4js-free",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/Log4js.js",
   "author": "cswleocsw <cswleo@gmail.com>",
